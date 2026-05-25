@@ -1,0 +1,152 @@
+{
+  "info": {
+    "name": "Taller 4 - Punto 1 - Modulos principales",
+    "description": "Coleccion Postman reducida para probar Disponibilidad y Escalabilidad en los modulos Batch, Simulacion y Recomendaciones.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "content_url",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "simulation_url",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "simulation_admin_url",
+      "value": "http://localhost:9990"
+    },
+    {
+      "key": "recommendation_url",
+      "value": "http://localhost:8083"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Disponibilidad",
+      "item": [
+        {
+          "name": "Modulo Batch - contenido cargado",
+          "request": {
+            "method": "GET",
+            "url": "{{content_url}}/api/courses/1/modules"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El modulo Batch responde correctamente', function () {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "",
+                  "pm.test('La respuesta llega en menos de 2 segundos', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Modulo Simulacion - servicio disponible",
+          "request": {
+            "method": "GET",
+            "url": "{{simulation_admin_url}}/health/ready"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El modulo de Simulacion esta listo', function () {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "",
+                  "pm.test('La respuesta llega en menos de 2 segundos', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Modulo Recomendaciones - recomendaciones usuario 1",
+          "request": {
+            "method": "GET",
+            "url": "{{recommendation_url}}/api/recommendations/user/1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('El modulo de Recomendaciones responde correctamente', function () {",
+                  "  pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+                  "});",
+                  "",
+                  "pm.test('La respuesta llega en menos de 2 segundos', function () {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "02 - Escalabilidad - Batch",
+      "item": [
+        {
+          "name": "Modulo Batch - contenido cargado",
+          "request": {
+            "method": "GET",
+            "url": "{{content_url}}/api/courses/1/modules"
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Escalabilidad - Simulacion",
+      "item": [
+        {
+          "name": "Modulo Simulacion - readiness",
+          "request": {
+            "method": "GET",
+            "url": "{{simulation_admin_url}}/health/ready"
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Escalabilidad - Recomendaciones",
+      "item": [
+        {
+          "name": "Modulo Recomendaciones - usuario 1",
+          "request": {
+            "method": "GET",
+            "url": "{{recommendation_url}}/api/recommendations/user/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Funcional opcional - Simulacion real",
+      "item": [
+        {
+          "name": "Ejecutar simulacion enrollment 1",
+          "request": {
+            "method": "POST",
+            "url": "{{simulation_url}}/api/simulations/enrollments/1"
+          }
+        }
+      ]
+    }
+  ]
+}

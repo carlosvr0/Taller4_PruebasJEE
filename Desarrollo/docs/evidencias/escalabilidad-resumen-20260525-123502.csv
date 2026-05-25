@@ -1,0 +1,4 @@
+﻿"Component","Service","Url","Concurrency","Requests","SuccessfulRequests","SuccessRatePercent","AverageResponseMs","MinResponseMs","P95ResponseMs","MaxResponseMs","BatchDurationSeconds","ThroughputRequestsPerSecond"
+"Modulo Batch","content-service","http://localhost:8081/api/courses/1/modules","500","500","500","100","839,43","6,37","1408,03","1422,79","1,72","290,07"
+"Modulo Simulacion","simulation-service","http://localhost:9990/health/ready","500","500","99","19,8","576,41","288,13","672,94","683,95","20,19","24,77"
+"Modulo Recomendaciones","recommendation-service","http://localhost:8083/api/recommendations/user/1","500","500","500","100","1375,63","1033,62","1811,3","1838,05","2,01","248,21"
